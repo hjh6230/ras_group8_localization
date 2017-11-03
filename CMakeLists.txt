@@ -24,8 +24,11 @@ include_directories(
 )
 
 add_executable(${PROJECT_NAME}
-  src/localization_node.cpp
   src/Localization.cpp
+  src/customparticlefilter.cpp
+  src/nonlinearMeasurementPdf.cpp
+  src/nonlinearSysetmPdf.cpp
+
 )
 
 add_dependencies(${PROJECT_NAME}
@@ -52,3 +55,11 @@ install(
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
   FILES_MATCHING PATTERN "*.hpp"
 )
+
+
+find_package(PkgConfig)
+pkg_check_modules(BFL REQUIRED orocos-bfl)
+include_directories(${BFL_INCLUDE_DIRS}/bfl)
+message("BFL include dirs:" ${BFL_INCLUDE_DIRS})
+message("BFL library dirs:" ${BFL_LIBRARY_DIRS})
+link_directories(${BFL_LIBRARY_DIRS})
