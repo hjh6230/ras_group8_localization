@@ -1,4 +1,4 @@
-#include "nonlinearMeasurementPdf.h"
+#include "ras_group8_localization/nonlinearMeasurementPdf.h"
 #include <wrappers/rng/rng.h> // Wrapper around several rng libraries
 #include "math.h"
 
@@ -49,8 +49,8 @@ namespace BFL
       {
          return sqrt((nextx-x)^2+(nexty-y)^2);
       }
-      nextx=nextx+step*cos(theta);
-      nexty=nexty+step*sin(theta);
+      nextx=nextx+step*std::cos(theta);
+      nexty=nexty+step*std::sin(theta);
       if (sqrt((nextx-x)^2+(nexty-y)^2)>max_range)
       {
          return max_range

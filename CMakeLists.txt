@@ -1,10 +1,16 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(ras_group8_localization)
 
+
+
+
 find_package(catkin REQUIRED
   COMPONENTS
   roscpp
   phidgets
+  std_msgs
+  geometry_msgs
+  sensor_msgs
 )
 
 catkin_package(
@@ -14,9 +20,24 @@ catkin_package(
   CATKIN_DEPENDS
     roscpp
     phidgets
+    std_msgs
+    geometry_msgs
+    sensor_msgs
 
 # DEPENDS
 )
+
+find_package(PkgConfig)
+
+pkg_check_modules(BFL REQUIRED orocos-bfl)
+if(BFL_FOUND)
+  message("find state")
+endif(BFL_FOUND)
+include_directories(${BFL_INCLUDE_DIRS}/bfl)
+message("BFL include dirs:" ${BFL_INCLUDE_DIRS})
+message("BFL library dirs:" ${BFL_LIBRARY_DIRS})
+link_directories(${BFL_LIBRARY_DIRS})
+
 
 include_directories(
   include
@@ -39,6 +60,10 @@ target_link_libraries(${PROJECT_NAME}
   ${catkin_LIBRARIES}
 )
 
+target_link_libraries(${PROJECT_NAME} 
+  ${BFL_LIBRARIES}
+)
+
 catkin_add_gtest(localization_tests test/test_localization.cpp src/Localization.cpp)
 
 # Make main executable
@@ -57,9 +82,6 @@ install(
 )
 
 
-find_package(PkgConfig)
-pkg_check_modules(BFL REQUIRED orocos-bfl)
-include_directories(${BFL_INCLUDE_DIRS}/bfl)
-message("BFL include dirs:" ${BFL_INCLUDE_DIRS})
-message("BFL library dirs:" ${BFL_LIBRARY_DIRS})
-link_directories(${BFL_LIBRARY_DIRS})
+
+
+

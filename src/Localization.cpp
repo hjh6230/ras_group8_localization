@@ -13,7 +13,6 @@
 #include <string>
 #include <std_msgs/Empty.h>
 
-#include <>
 #include <geometry_msgs/PoseArray.h>
 #include <geometry_msgs/PoseStamped.h>
 #include "nav_msgs/Odometry.h"
@@ -167,9 +166,9 @@ public:
    {
        ColumnVector measurement(3);
 
-       measurement(1) = msg.range[180];
-       measurement(2) = msg.range[90];
-       measurement(3) = msg.range[270];
+       measurement(1) = msg.range[0];
+       measurement(2) = msg.range[270];
+       measurement(3) = msg.range[90];
        //ROS_INFO("Measurement: %f",measurement(1));
       
        filter->Update(meas_model, measurement);
